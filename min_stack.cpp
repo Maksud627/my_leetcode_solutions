@@ -1,6 +1,9 @@
 // LC: 155 Min Stack: https://leetcode.com/problems/min-stack/
 // Stack, design, medium
 
+// approach
+// read this: https://leetcode.com/problems/min-stack/discuss/1209254/C%2B%2B-Simple-code-with-one-stack
+
 class MinStack {
 public:
     vector<pair<int, int>> min_stack;
