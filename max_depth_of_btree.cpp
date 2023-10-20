@@ -3,8 +3,7 @@
 
 // approach
 // watch this: https://youtu.be/eD3tmO66aBA
-// if totalwindowsize - max_freq of a char in that window = less of equal to given k, then okay
-// otherwise slide left pointer to right and decrease frequency of left pointer
+
 
 
 /**
