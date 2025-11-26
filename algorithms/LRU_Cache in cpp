@@ -1,0 +1,60 @@
+A Least Recently Used (LRU) Cacheorganizes items in order of use, allowing you to quickly identify which item hasn't been used for the longest amount of time.
+
+Picture a clothes rack, where clothes are always hung up on one side. To find the least-recently used item, look at the item on the other end of the rack.
+
+Under the hood, an LRU cache is often implemented by pairing doubly link list with a hash map.
+
+Strengths:
+Super fast accesses. LRU caches store items in order from most-recently used to least-recently used. That means both can be accessed in O(1)
+Super fast updates. Each time an item is accessed, updating the cache takes O(1).
+
+Here is a simple implementation in C++:
+
+typedef pair<int, int> Ipair;
+
+class LRUCache {
+    list<Ipair> keyvallist;
+    int capacity = 0;
+    int size = 0;
+    unordered_map<int, list<Ipair>::iterator> dictionary;
+public:
+    LRUCache(int capacity) {
+        this->capacity = capacity;
+    }
+    
+    int get(int key) 
+    {
+        if(dictionary.find(key) != dictionary.end())
+        {
+            auto iter = dictionary[key];
+            keyvallist.push_front(*iter);
+            dictionary[key] = keyvallist.begin();
+            auto value = iter->second;
+            keyvallist.erase(iter);
+            return value;
+        }
+        
+        return -1;
+    }
+    
+    void put(int key, int value) 
+    {
+       if(dictionary.find(key) != dictionary.end())
+       {
+           auto item = dictionary[key];
+           keyvallist.push_front(pair<int, int>(key, value));
+           dictionary[key] = keyvallist.begin();
+           keyvallist.erase(item);
+       }
+       else
+       {
+           if(dictionary.size() == capacity)
+           {
+               dictionary.erase(keyvallist.back().first);
+               keyvallist.pop_back();
+           }
+           keyvallist.push_front(pair<int, int>(key, value));
+           dictionary[key] = keyvallist.begin();
+       }
+    }
+}; 

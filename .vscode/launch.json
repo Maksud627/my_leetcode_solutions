@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "h:/Leetcode/my_leetcode_solutions",
-      "program": "h:/Leetcode/my_leetcode_solutions/build/Debug/outDebug",
+      "cwd": "h:/Leetcode/my_leetcode_solutions/AlgoExpert",
+      "program": "h:/Leetcode/my_leetcode_solutions/AlgoExpert/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
