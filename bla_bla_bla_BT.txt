@@ -1,0 +1,94 @@
+// tried to sketch binary tree related algorithms
+
+// pre-order traversal in dfs and bfs
+
+void printPreOrder(Node* root) {
+    // 1. Base Case: What if the root is null?
+    if(root == nullptr) return;
+    
+    // 2. Process: Print the current node's data
+    cout<< root->data << endl;
+
+    // 3. Recurse: Call the function on the left child
+    printPreOrder(root -> left);
+
+    // 4. Recurse: Call the function on the right child
+    printPreOrder(root -> right);
+}
+
+
+void printLevelOrder(Node* root) {
+    if (root == nullptr) return;
+
+    std::queue<Node*> q;
+    q.push(root); // Start the line with the root
+
+    while (!q.empty()) {
+        // 1. Get the node at the front of the line
+        Node* current = q.front();
+        q.pop();
+
+        // 2. Process it
+        std::cout << current->data << " ";
+
+        // 3. Put children in line (Left first, then Right)
+        if (current->left != nullptr) {
+            q.push(current->left);
+        }
+        if (current->right != nullptr) {
+            q.push(current->right);
+        }
+    }
+}
+
+// height of a BT
+int getHeight(Node* root) {
+    if (root == nullptr) return 0;
+    
+    return 1 + max(getHeight(root->left), getHeight(root->right));
+}
+
+
+// returns true if a target value exists in the BST, and false otherwise.
+bool search(Node* root, int target) {
+    // 1. Base Case: If root is null, it's not here
+    if (root == nullptr) return false;
+
+    // 2. Base Case: If root->data is the target, we found it!
+    if (root->data == target) return true;
+
+    // 3. Logic: If target is LESS than current data, where should we look?
+    if (target < root->data) {
+        return search(root->left, target);
+    } 
+    
+    // 4. Logic: If target is GREATER...
+    else {
+        return search(root -> right, target);
+    }
+}
+
+// Given the root of a binary tree, how would you check if it's a valid BST?
+#include <climits> // For LONG_MIN and LONG_MAX
+
+bool validate(Node* root, long minVal, long maxVal) {
+    // 1. Base Case: An empty tree is a valid BST
+    if (root == nullptr) return true;
+
+    // 2. The Check: Is the current node's value within the allowed range?
+    // We use 'long' to handle cases where the node value is INT_MIN or INT_MAX
+    if (root->data <= minVal || root->data >= maxVal) {
+        return false;
+    }
+
+    // 3. The Recursion: 
+    // Left side: must be > minVal AND < current node's data
+    // Right side: must be > current node's data AND < maxVal
+    return validate(root->left, minVal, root->data) && 
+           validate(root->right, root->data, maxVal);
+}
+
+bool isValidBST(Node* root) {
+    // We start with the widest possible range
+    return validate(root, LONG_MIN, LONG_MAX);
+}
